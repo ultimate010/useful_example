@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
     printf("Open file failed\n");
   }
   wchar_t BOM = 0xFEFF;
-  fputwc(BOM,file);
+  //fputwc(BOM,file);
   wchar_t word = 0x4E00;
   for(;word<0x9FA5;word++){
     fwprintf(file,L"%lc\n",word);
