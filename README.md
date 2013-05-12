@@ -5,12 +5,17 @@
 
 setLocal_writeWchar_example.c
 #############################
-设置local并且写入unicode到文件
+        设置local并且写入unicode到文件
 
 write_unicode_raw_example.c
 ###########################
-手工写入unicode到文件
+        手工写入unicode到文件
+
+perl_exe.pl
+###########
+
+        perl调用系统命令的例子
 
 utility
 #######
-各种编程需要用到的组件
+        各种编程需要用到的组件
