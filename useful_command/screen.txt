@@ -1,0 +1,22 @@
+常用命令：
+screen：第一次使用的时候，输入screen，即新建了一个session，然后默认有一个shell窗口，下面会有状态栏显
+示窗口的名称，通常是“0 bash”。
+ctra a + A：假如你想重命名这个窗口，按ctra a，然后A，就可以重命名
+ctrl a + c：新建窗口
+screen -t name：新建名字为name的窗口
+ctrl a + n or p：切换窗口，n next，p previous
+ctrl a + “：列出所有的窗口，也可以在状态栏观察到
+screen -S name：新建一个session 名字为name
+ctra a + d：使得当前的session detached，这个是很重要的一个命令，这个命令使得你临时退出了该session，
+而下次可以进行重新连接
+screen -ls：想进行重新连接的时候，你需要知道你的screen session是哪一个，然后使用screen -r id命令，ls
+列出了所有的screen session的id，当然假如你使用screen -S name创建的session的话，会有一个名字，更便于
+记忆
+screen -r id/name：重新连接screen session id/name，即恢复访问你之前打开的诸多窗口
+exit：退出当前的窗口
+ctrl a + K：kill当前窗口
+
+在主目录下写入.screenrc文件，添加状态栏
+hardstatus on
+hardstatus alwayslastline
+hardstatus string “%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %m/%d %C%a
