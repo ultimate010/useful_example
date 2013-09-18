@@ -23,3 +23,7 @@ debug.h
 utility
 #######
         各种编程需要用到的组件
+
+mpitest
+#######
+        mpi框架
