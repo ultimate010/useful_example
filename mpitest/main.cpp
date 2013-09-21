@@ -75,8 +75,8 @@ int slave(){
   MPI_Status status;
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
-  char temp[2] = {0};
-  temp[0] = '0' + rank;
+  char temp[20] = {0};
+  sprintf(temp,"%d",rank);
   string path(temp);
   path = "log.node" + path;
   ofstream out(path.c_str());
