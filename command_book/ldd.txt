@@ -1,0 +1,2 @@
+ldd /bin/ln /sbin/sln
+#查看当前的是否采用动态链接库

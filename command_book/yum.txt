@@ -1,0 +1,38 @@
+    常用命令
+1.使用YUM查找软件包
+命令：yum search <keyword>
+2.列出所有可安装的软件包
+命令：yum list
+3.列出所有可更新的软件包
+命令：yum list updates
+4.列出所有已安装的软件包
+命令：yum list installed
+5.列出所有已安装但不在 Yum Repository 內的软件包
+命令：yum list extras
+6.列出所指定的软件包
+命令：yum list <package_name>
+7.使用YUM获取软件包信息
+命令：yum info <package_name>
+8.列出所有软件包的信息
+命令：yum info
+9.列出所有可更新的软件包信息
+命令：yum info updates
+10.列出所有已安裝的软件包信息
+命令：yum info installed
+11.列出所有已安裝但不在 Yum Repository 內的软件包信息
+命令：yum info extras
+12.列出软件包提供哪些文件
+命令：yum provides <package_name>
+    清除YUM缓存
+yum 会把下载的软件包和header存储在cache中，而不会自动删除。如果我们觉得它们占用了磁盘空间，可以使用
+yum clean指令进行清除，更精确 的用法是yum clean headers清除header，yum clean packages清除下载的rpm包
+，yum clean all一 股脑儿端
+1.清除缓存目录(/var/cache/yum)下的软件包
+命令：yum clean packages
+2.清除缓存目录(/var/cache/yum)下的 headers
+命令：yum clean headers
+3.清除缓存目录(/var/cache/yum)下旧的 headers
+命令：yum clean oldheaders
+4.清除缓存目录(/var/cache/yum)下的软件包及旧的headers
+命令：yum clean, yum clean all (= yum clean packages; yum clean oldheaders)
+
