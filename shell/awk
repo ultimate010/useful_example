@@ -1,0 +1,2 @@
+
+awk 'BEGIN{} {if(rand() <= $pro){print $0;lineCount++;}} END{print lineCount;}' class_v6.id.jx.txt.u8  pro=0.7 | head -n 100  | wc -l
