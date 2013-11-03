@@ -27,3 +27,7 @@ utility
 mpitest
 #######
         mpi框架
+
+useful_command
+##############
+        有用的一些命令

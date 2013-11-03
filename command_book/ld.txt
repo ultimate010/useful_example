@@ -1,0 +1,2 @@
+/etc/ld.so.conf #表示库文件目录
+ldconfig #更新库文件后，需要此命令，更新ld缓存 /etc/ld.so.cache 文件
