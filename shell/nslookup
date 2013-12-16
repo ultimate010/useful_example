@@ -1,0 +1,85 @@
+命令： nslookup
+
+网络实用程序，用于获得互联网服务器的信息。顾名思义，该实用程序将发现通过查询 DNS 域的名称服务器信息。
+
+
+[avishek@tecmint ~]$ nslookup tecmint.com
+
+Server:     192.168.1.1
+Address:    192.168.1.1#53
+
+Non-authoritative answer:
+Name:   tecmint.com
+Address: 50.16.67.239
+
+查询邮件交换器记录
+
+[avishek@tecmint ~]$ nslookup -query=mx tecmint.com
+
+Server:     192.168.1.1
+Address:    192.168.1.1#53
+
+Non-authoritative answer:
+tecmint.com mail exchanger = 0 smtp.secureserver.net.
+tecmint.com mail exchanger = 10 mailstore1.secureserver.net.
+
+
+查询域名服务器
+
+[avishek@tecmint ~]$ nslookup -type=ns tecmint.com
+
+Server:     192.168.1.1
+Address:    192.168.1.1#53
+
+Non-authoritative answer:
+tecmint.com nameserver = ns3404.com.
+tecmint.com nameserver = ns3403.com.
+
+
+查询DNS记录
+
+
+[avishek@tecmint ~]$ nslookup -type=any tecmint.com
+
+Server:     192.168.1.1
+Address:    192.168.1.1#53
+
+Non-authoritative answer:
+tecmint.com mail exchanger = 10 mailstore1.secureserver.net.
+tecmint.com mail exchanger = 0 smtp.secureserver.net.
+tecmint.com nameserver = ns06.domaincontrol.com.
+tecmint.com nameserver = ns3404.com.
+tecmint.com nameserver = ns3403.com.
+tecmint.com nameserver = ns05.domaincontrol.com.
+
+查询起始授权机构
+
+[avishek@tecmint ~]$ nslookup -type=soa tecmint.com
+
+Server:     192.168.1.1
+Address:    192.168.1.1#53
+
+Non-authoritative answer:
+tecmint.com
+    origin = ns3403.hostgator.com
+    mail addr = dnsadmin.gator1702.hostgator.com
+    serial = 2012081102
+    refresh = 86400
+    retry = 7200
+    expire = 3600000
+    minimum = 86400
+
+Authoritative answers can be found from:
+
+查询端口号
+
+更改使用你想要连接的端口号
+
+
+[avishek@tecmint ~]$ nslookup -port 56 tecmint.com
+
+Server:     tecmint.com
+Address:    50.16.76.239#53
+
+Name:   56
+Address: 14.13.253.12

@@ -1,0 +1,66 @@
+命令: dig
+
+dig是查询DNS 域名服务器的工具，可以查询的主机地址、 邮件交流、 域名服务器相关的信息。在任何 Linux (Unix) 或 Macintosh OS X 操作系统上，都可以使用该工具。dig的最典型的用法是单个主机的查询。
+
+[avishek@tecmint ~]$ dig tecmint.com
+
+; <<>> DiG 9.8.2rc1-RedHat-9.8.2-0.17.rc1.el6 <<>> tecmint.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<
+
+关闭注释行
+
+[avishek@tecmint ~]$ dig tecmint.com +nocomments
+
+; <<>> DiG 9.8.2rc1-RedHat-9.8.2-0.17.rc1.el6 <<>> tecmint.com +nocomments
+;; global options: +cmd
+;tecmint.com.           IN  A
+tecmint.com.        14400   IN  A   40.216.66.239
+;; Query time: 418 msec
+;; SERVER: 192.168.1.1#53(192.168.1.1)
+;; WHEN: Sat Jun 29 13:53:22 2013
+;; MSG SIZE  rcvd: 45
+
+关闭认证块
+
+[avishek@tecmint ~]$ dig tecmint.com +noauthority
+
+; <<>> DiG 9.8.2rc1-RedHat-9.8.2-0.17.rc1.el6 <<>> tecmint.com +noauthority
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<
+
+关闭 其他 块
+
+[avishek@tecmint ~]$ dig  tecmint.com +noadditional
+
+; <<>> DiG 9.9.2-P1 <<>> tecmint.com +noadditional
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<
+
+关闭 统计块
+
+[avishek@tecmint ~]$ dig tecmint.com +nostats
+
+; <<>> DiG 9.8.2rc1-RedHat-9.8.2-0.17.rc1.el6 <<>> tecmint.com +nostats
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<
+
+关闭回复块
+
+[avishek@tecmint ~]$ dig tecmint.com +noanswer
+
+; <<>> DiG 9.8.2rc1-RedHat-9.8.2-0.17.rc1.el6 <<>> tecmint.com +noanswer
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<
+
+关闭所有块
+
+[avishek@tecmint ~]$ dig tecmint.com +noall
+
+; <<>> DiG 9.8.2rc1-RedHat-9.8.2-0.17.rc1.el6 <<>> tecmint.com +noall
+;; global options: +cmd
