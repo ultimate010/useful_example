@@ -1,0 +1,39 @@
+git checkout -b dev #创建分支
+git branch	#查看分支
+git merge dev #合并分支
+git branch -d dev #删除分支
+git merge --no-ff -m 'comment' dev #合并去掉Fast forward模式
+git log --graph #图形化log
+git log --pretty=oneline #一行log
+
+git checkout -- file #丢掉修改
+git reset HEAD file #把没有commit的修改丢掉
+git reset --hard HEAD #回退上一个版本
+git reset --hard hashcode #回退到第n个版本
+git reflog #查看变动情况
+
+git stash #暂时存储工作区
+git stash list #查看存储情况
+git stash pop #弹出上一个工作区
+git stash apply stash@{0}  #回复到某个工作区
+git stash drop #删除某个工作区
+
+git remote -v #查看远程库
+git push origin master #推送master库
+git push origin dev #推送dev库
+
+git tag v1.0 #给当前库打标签1.0
+git tag tagname hashcode #给特定库打标签
+git show tagname #查看特定标签的内容
+git tag -a v0.1 -m "version 0.1 released" 3628164 #创建带有说明的标签
+git tag -d tagname #删除标签
+git push origin v1.0 #推送标签
+git push origin --tags #推送所有标签
+git tag -d v0.9 #删除本地标签
+git push origin :refs/tags/v0.9 #删除远程标签
+git config --global color.ui true #git 有颜色显示
+git config --global alias.st status #git 设置别名
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset-%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+#超级cool的log
+
+
