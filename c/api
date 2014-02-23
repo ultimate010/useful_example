@@ -1,0 +1,70 @@
+printf();
+ssprintf(); //写入字符串
+scanf();
+sscanf(); //从字符串中读取
+getchar(); //向标准输入读取一个char
+putchar(); //向标准输出写入一个char
+getc(); //从文件读取一个char
+putc(); //向文件写入一个char
+#define getchar()  getc(stdin)
+#define putchar(c)  putc((c),stdout)
+int fscanf(FILE *fp, char*format, ...) //从文件输入
+int fprintf(FILE *fp,char *format, ...) //想文件写入
+char *fgets(char *line, int maxline,FILE *fp) //行输入
+int fputs(char *line,FILE *fp) //行输出，不含换行符
+gets() //标准输入读取行
+puts() //标准输出输出行
+strcat(s,t)  将 t 指向的字符串连接到 s 指向的字符串的末尾
+strncat(s, t,n)  将 t 指向的字符串中前 n 个字符连接到 s 指向的字符串的末尾
+strcmp(s,t)  根据 s 指向的字符串小于（s<t） 、等于（s==t）或大于（s>t）t
+指向的字符串的不同情况，分别返回负整数、0 或正整数
+strncmp(s, t,n)  同 strcmp 相同，但只在前 n 个字符中比较
+strcpy(s,t)  将 t 指向的字符串复制到 s 指向的位置
+strncpy(s, t,n)  将 t 指向的字符串中前 n 个字符复制到 s 指向的位置
+strlen(s)  返回 s 指向的字符串的长度
+strchr(s,c)  在 s 指向的字符串中查找 c， 若找到， 则返回指向它第一次出现的位
+置的指针，否则返回 NULL
+strrchr(s, c)  在 s 指向的字符串中查找 c， 若找到， 则返回指向它最后一次出现的
+位置的指针，否则返回 NULL
+salpha(c)  若 c 是字母，则返回一个非 0 值，否则返回 0
+isupper(c)  若 c 是大写字母，则返回一个非 0 值，否则返回 0
+islower(c)  若 c 是小写字母，则返回一个非 0 值，否则返回 0
+isdigit(c)  若 c 是数字，则返回一个非 0 值，否则返回 0
+isalnum(c)  若 isalpha(c)或 isdigit(c)，则返回一个非 0 值，否则返回 0
+isspace(c)  若 c 是空格、横向制表符、换行符、回车符，换页符或纵向制表符，
+则返回一个非 0 值
+toupper(c)  返回 c 的大写形式
+tolower(c)  返回 c 的小写形式
+
+
+open(); //系统打开文件接口
+create(); //系统创建文件接口
+
+
+int ungetc(int c,FILE *fp)  //写回文件
+#include <stdio.h>
+    /* cat:  concatenate files, version 1 */
+    main(int argc, char*argv[])
+{
+  FILE *fp;
+  void filecopy(FILE *,FILE *)
+    if (argc == 1) /*no args; copy standard input*/
+    filecopy(stdin,stdout);
+    else
+    while(--argc > 0)
+    if ((fp =fopen(*++argv, "r")) == NULL) {
+      printf("cat: can't open%s\n, *argv);
+	return 1;
+    } else {
+      filecopy(fp, stdout);
+      fclose(fp);
+    }
+  return 0;
+}
+/* filecopy:  copy fileifpto fileofp */
+void filecopy(FILE *ifp,FILE *ofp)
+{
+  int c;
+  while ((c = getc(ifp))!= EOF)
+  putc(c, ofp);
+}
