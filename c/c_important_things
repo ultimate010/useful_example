@@ -1,0 +1,46 @@
+void:   ANSI C规定函数无参数时候传入void作为参数.
+
+static:    对于c中的static的用法,可以用来修饰函数和变量,对于修饰函数,使得函数的出了该函数所在的文件
+可以见外,其他地方没法调用.对于修饰变量,该对象静态存储,如果是全局变量,那么只能在本文件中的函数访问,如
+果是函数的局部变量,那么只有该函数能使用.static 变量只在第一次进入程序时候进行初始化
+
+extern: 一个外部变量只能在某个文件中定义一次,而其它文件可以通过 extern 声明来访问它(定义外部变量的源
+      文件中也可以包含对该外部变量的extern 声明),外部变量的定义中必须指定数组的长度,但 extern 声明则不一定
+要指定数组的长度。
+
+register: 声明告诉编译器,它所声明的变量在程序中使用频率较高。变量存放在机器的寄存器中.只能用于函数的
+局部变量和函数形参.
+
+初始化问题:
+
+字符数组的初始化比较特殊:可以用一个字符串来代替用花括号括起来并用逗号分隔的
+初始化表达式序列。例如:char pattern[] = "ould";
+它同下面的声明是等价的:
+char pattern[] = { 'o', 'u', 'l', 'd'};
+这种情况下,数组的长度是 5(4 个字符加上一个字符串结束符'\0').
+
+宏定义的使用:
+#define dprint(expr) printf(#expr " = %g\n", expr)
+dprint(x/y); 展开为printf("x/y" " = &g\n", x/y);等价为printf("x/y = &g\n", x/y);
+
+#define paste(front, back) front ## back 宏调用 paste(name, 1)的结果将建立记号 name1。
+##的嵌套使用规则比较难以掌握,详细细节请参阅附录 A。
+
+
+指针:
+char **argv
+argv: pointer to char
+int (*daytab)[13]
+daytab: pointer to array[13] of int
+int *daytab[13]
+daytab: array[13] of pointer to int
+void *comp()
+comp: function returning pointer to void
+void (*comp)()
+comp: pointer to function returning void
+char (*(*x())[])()
+x: function returning pointer to array[] of
+pointer to function returning char
+char (*(*x[3])())[5]
+x: array[3] of pointer to function returning
+pointer to array[5] of char
