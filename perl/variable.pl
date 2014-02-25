@@ -1,3 +1,10 @@
+
+q// is generally the same thing as using single quotes - meaning it doesn't interpolate values inside the delimiters.
+qq// is the same as double quoting a string. It interpolates.
+qw// return a list of white space delimited words. @q = qw/this is a test/ is functionally the same as @q = ('this', 'is', 'a', 'test')
+qx// is the same thing as using the backtick operators.
+I've never used qr//, but it's got something to do with compiling regex's for later use
+
 一、正则表达式特殊变量：
 1、$n 　　:包含上次模式匹配的第n个子串
 2、$& 　　:前一次成功模式匹配的字符串
