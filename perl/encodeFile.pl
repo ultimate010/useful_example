@@ -3,8 +3,9 @@ use strict;
 use warnings;
 use Encode;
 use utf8;
+#use open ":encoding(gbk)", ":std"; 用这个可以全局替换
 
-open(my $in,"<:utf8","newClass.txt");
+open(my $in,"<:encoding(utf8)","newClass.txt");
 open(my $out, ">:encoding(utf-8)","newOut.txt");
 my @arr = ();
 
