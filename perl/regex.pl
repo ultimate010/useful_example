@@ -5,7 +5,7 @@ PERL支持PERL4和标准UNIX模式匹配操作所没有的一些模式匹配能�
 通常模式选项置于其后，有四个选项：i、m、s、x可以内嵌使用，语法为：/(?option)pattern/，等价于/pattern/option。
 3、肯定的和否定的预见匹配
 肯定的预见匹配语法为/pattern(?=string)/，其意义为匹配后面为string的模式，相反的，(?!string)意义为匹配后面非string的模式，如：
-$string = “25abc8″;
+$string = "5abc343";
 $string =~ /abc(?=[0-9])/;
 已匹配的模式，此处为abc，而不是abc8
 4、模式注释
