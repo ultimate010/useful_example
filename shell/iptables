@@ -1,0 +1,154 @@
+
+Iptables是专为Linux操作系统打造的极其灵活的防火墙工具。对Linux极客玩家和系统管理员来说，iptables非常有用。本文将向你展示如何配置最通用的Linux防火墙。
+
+关于iptables
+
+Iptables是一个基于命令行的防火墙工具，它使用规则链来允许/阻止网络流量。当一条网络连接试图在你的系统中建立时，iptables会查找其对应的匹配规则。如果找不到，iptables将对其采取默认操作。
+几乎所有的Linux发行版都预装了iptables。在Ubuntu/Debian中更新/安装iptables的命令为：
+
+Shell sudo apt-get install iptables
+现有的一些图形界面软件也可以替代iptables，如Firestarter。但iptables用起来并不难。配置iptables的规则时要特别小心，特别是在你远程登陆服务器的时候。因为这时的一个错误有可能让你和服务器永久失去连接，而你必须要到服务器面前才能解决它。
+
+Iptables规则链的类型
+
+Iptables的规则链分为三种：输入、转发和输出。
+输入——这条链用来过滤目的地址是本机的连接。例如，如果一个用户试图使用SSH登陆到你的PC/服务器，iptables会首先匹配其IP地址和端口到iptables的输入链规则。
+
+转发——这条链用来过滤目的地址和源地址都不是本机的连接。例如，路由器收到的绝大数数据均需要转发给其它主机。如果你的系统没有开启类似于路由器的功能，如NATing，你就不需要使用这条链。
+有一个安全且可靠的方法可以检测你的系统是否需要转发链：
+
+Shell iptables -L -v
+2-packets-processed
+
+上图是对一台已经运行了几个星期的服务器的截图。这台服务器没有对输入和输出做任何限制。从中可以看到，输入链和输出链已经分别处理了11GB和17GB的数据，而转发链则没有处理任何数据。这是因为此服务器没有开启类似于路由器的转发功能。
+
+输出——这条链用来过滤源地址是本机的连接。例如，当你尝试ping howtogeek.com时，iptables会检查输出链中与ping和howtogeek.com相关的规则，然后决定允许还是拒绝你的连接请求。
+
+注意：当ping一台外部主机时，看上去好像只是输出链在起作用。但是请记住，外部主机返回的数据要经过输入链的过滤。当配置iptables规则时，请牢记许多协议都需要双向通信，所以你需要同时配置输入链和输出链。人们在配置SSH的时候通常会忘记在输入链和输出链都配置它。
+
+链的默认行为
+
+在配置特定的规则之前，也许你想配置这些链的默认行为。换句话说，当iptables无法匹配现存的规则时，你想让它作出何种行为。
+你可以运行如下的命令来显示当前iptables对无法匹配的连接的默认动作：
+
+Shell iptables -L
+3-policy-setting
+
+正如上面所显示的，我们可以使用grep来使输出的结果变得更加简洁。在上面的截图中，所有的链默认情况下均接受所有的连接。
+通常情况下，你会希望你的系统默认情况下接收所有的网络数据。这种设定也是iptables的默认配置。接收网络连接的配置命令是：
+
+Shell 
+iptables --policy INPUT ACCEPT
+iptables --policy OUTPUT ACCEPT
+iptables --policy FORWARD ACCEPT
+你也可以在使用默认配置的情况下，添加一些命令来过滤特定的IP地址或端口号。我们稍后在本文介绍这些命令。
+如果你想默认情况下拒绝所有的网络连接，然后在其基础上添加允许的IP地址或端口号，你可以将默认配置中的ACCEPT变成DROP，如下图所示。这对于一些含有敏感数据的服务器来说是极其有用的。通常这些服务器只允许特定的IP地址访问它们。
+
+Shell
+iptables --policy INPUT DROP
+iptables --policy OUTPUT DROP
+iptables --policy FORWARD DROP
+对特定连接的配置
+
+下面来看看如何对特定的IP地址或端口作出设定。本文主要介绍三种最基本和常见的设定。
+Accept – 接收所有的数据。
+Drop – 丢弃数据。应用场景：当你不想让数据的来源地址意识到你的系统的存在（最好的处理方法）。
+Reject – 不允许建立连接，但是返回一个错误回应。应用场景：当你不想让某个IP地址访问你的系统，但又想让它们知道你的防火墙阻止了其访问。
+为了直观的区分上述三种情况，我们使用一台PC来ping一台配置了iptables的Linux电脑：
+允许访问
+4-accept
+
+丢弃访问
+5-drop
+
+拒绝访问
+6-reject
+
+允许或阻止特定的连接
+
+在配置完基本的规则链之后，你就可以配置iptables来允许或者阻止特定的IP地址或者端口。
+注意：在这些例子中，我们使用iptables -A将额外的规则添加到现存的链中。Iptables在执行匹配的时候，会从列表的顶端开始搜索。你可以使用iptables -I [chain] [number]将新的规则插入到列表的指定位置。
+
+来自同一IP地址的连接
+下面这个例子展示了如何阻止来自IP地址为10.10.10.10的所有连接。
+
+Shell
+
+1
+iptables -A INPUT -s 10.10.10.10 -j DROP
+来自一组IP地址的连接
+下面这个例子展示了如何阻止来自子网10.10.10.0/24内的任意IP地址的连接。你可以使用子网掩码或者标准的/符号来标示一个子网：
+
+Shell
+
+1
+iptables -A INPUT -s 10.10.10.0/24 -j DROP
+或
+
+Shell
+
+1
+iptables -A INPUT -s 10.10.10.0/255.255.255.0 -j DROP
+特定端口的连接
+这个例子展示了如何阻止来自10.10.10.10的SSH连接。
+
+Shell
+
+1
+iptables -A INPUT -p tcp --dport ssh -s 10.10.10.10 -j DROP
+你可以将“ssh”替换成其它任何协议或者端口号。上述命令中的-p tcp告诉iptables连接使用的是何种协议。
+下面这个例子展示了如何阻止来自任意IP地址的SSH连接。
+
+Shell
+
+1
+iptables -A INPUT -p tcp --dport ssh -j DROP
+连接状态
+
+我们之前提到过，许多协议均需要双向通信。例如，如果你打算允许SSH连接，你必须同时配置输入和输出链。但是，如果你只想允许来自外部的SSH请求，那该怎么做？
+下面这个例子展示了如何允许源IP地址为10.10.10.10同时阻止目的地址为10.10.10.10的SSH连接：
+
+Shell
+
+1
+2
+iptables -A INPUT -p tcp --dport ssh -s 10.10.10.10 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 22 -d 10.10.10.10 -m state --state ESTABLISHED -j ACCEPT
+保存更改
+
+上述方法对iptables规则作出的改变是临时的。如果你想永久保存这些更改，你需要运行额外的命令（不同Linux发行版下的保存命令也不相同）：
+Ubuntu:
+
+Shell
+
+1
+sudo /sbin/iptables-save
+Red Hat / CentOS:
+
+Shell
+
+1
+/sbin/service iptables save
+或者
+
+Shell
+
+1
+/etc/init.d/iptables save
+其它命令
+
+列出iptables的当前配置：
+
+Shell
+
+1
+iptables -L
+使用-v选项将显示数据包和字节信息；使用-n选项将以数字形式列出信息，即不将IP地址解析为域名。
+换句话讲，主机名，协议和网络都以数字的形式列出。
+
+清除当前所有的配置规则：
+Shell
+
+1
+iptables -F
+
