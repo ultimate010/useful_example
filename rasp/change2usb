@@ -1,0 +1,20 @@
+然后打开SD中的
+
+cmdline.txt文件，用windows记事本打开，修改
+root=/dev/mmcblk0p2为
+root=/dev/sda2，保存退出记事本
+4.后期工作
+
+完成上面的就可以点亮Raspberrry Pi进入系统啦，进入系统后接下来要进行一些后期操作。
+
+因为引导还在SD卡里面系统的系统的raspi-config功能都会失效，所以想设置语言和时区、超频、还有最重要的将系统拓展到整个SD功能都不能用啦。
+
+可用一下方法解决，在命令行里输入以下操作
+cp /usr/bin/raspi-config ~
+sed -i 's/mmcblk0p2/sda2/' ~/raspi-config
+sed -i 's/mmcblk0/sda/' ~/raspi-config
+sudo ~/raspi-config
+
+最好是直接粘贴负责否则输入容易出错。
+
+OK基本上就是这样啦！

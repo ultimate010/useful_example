@@ -1,0 +1,17 @@
+运行后，输入
+layout src
+layout asm
+layout next
+l num表示查看源代码
+r表示运行程序
+n   表示下一步，不进入函数调用
+step 或 s    表示下一步，进入函数效用
+continue 或 c   表示一直执行到下一个断点或者结束
+stepi 或 si 单步跟踪一条机器指令
+continuei 或 ci 单步执行机器指令
+finish  运行程序，直到函数返回，并打印返回堆栈地址和返回值及参数信息
+until 或 u  当厌倦循环体内单步跟踪，运行程序，直到退出循环体
+f <n>   显示当前运行位置,第n层
+bt  显示栈信息
+
+display <exp>   设置自动显示
