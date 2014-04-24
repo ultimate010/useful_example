@@ -13,3 +13,5 @@ PERL5中可以在模式中用?#来加注释，如：
 if $string =~ /(?i)[a-z]{2,3}(?# match two or three alphabeticcharacters)/( {
 ...
 }
+~s~\Q$var\E~~; 用$var匹配
+
