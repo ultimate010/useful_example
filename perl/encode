@@ -1,0 +1,66 @@
+发信人: FenRagwort (泽), 信区: Perl
+标  题: Perl实用中文处理步骤（修改版）
+发信站: 水木社区 (Mon Feb 14 12:52:14 2011), 转信
+
+（修改版 感谢Invader）
+
+0、你至少得知道编码是怎么回事，utf-8、gbk是什么意思
+  你的文本编辑器能显示一个文件是什么编码，
+      不然你要处理中文文件，都不知道用什么编码打开
+  不过一般就是gbk和utf8两种，实在不行两个都试一遍
+  注意也许你看到的不是gbk，而是gb2312，
+      这两个使用上实际是一样的，gbk完全包含gb2312
+
+1、让你的脚本文件本身用utf8保存，最好养成写任何脚本都用utf8的习惯
+
+2、脚本开头加上：
+  use utf8;
+  use open ":encoding(gbk)", ":std";
+  意思是脚本里的字符串都用utf8处理，但是标准输入输出用gbk（默认的代码页编码）
+  做到这一步，脚本里就可以直接用中文了，字符串、正则表达式都没问题
+
+  如果要打开的文件全部是一种编码，如utf8，则可以加上：
+  use open ":encoding(utf8)"; #如果文件全是gbk，那么承上编码设置，此行可省略
+
+3.1、打开内有中文的文件前，先要确定它的编码，
+       最常见是gbk或utf8，台湾来的可能是big5，utf16le的偶有可能，其他较少见
+  这样打开：
+  open my $fh, "<:encoding(gbk)", "file.txt" or die; # 读文件
+  open my $fh, ">:encoding(utf8)", "file.txt" or die; # 写文件
+  # 如果上面设置了默认打开编码为utf8，则具体打开文件时可省掉":encoding(utf8)"
+  # 打开别的编码的文件，还需显式指定编码
+
+  如果Win32系统下打开utf16le或be文件，需要写成：
+  open my $fh, "<:raw:encoding(utf16le):crlf", "file.txt" or die;
+      否则会有crlf转换的bug
+
+3.2、也可以先打开文件，立刻再用binmode绑定编码
+  open my $fh, "file.txt" or die;
+  binmode($fh, ":encoding(gbk)");
+  一般情况，直接在open里指定encoding即可，有时需要先接收数据，再binmode
+
+4、如果你的文件名是中文，有点麻烦，得这样：
+  use Encode qw/encode/;
+  my $file = "2011年工作记录.txt"; # 中英文数字混合文件名也没问题
+  $file = encode("gbk", $file); # 文件名是通过标准输出传给命令行的，而命令行
+                                # 的编码是gbk，所以要编码成gbk，保持一致
+  open my $fh, "<:encoding(gbk)", $file or die;
+
+
+OK，中文问题搞定了，然后该干嘛干嘛，除了一些以字节为对象的操作（如seek、pack），
+你就把“甲乙丙丁”当“ABCD”用吧，冇问题
+
+X、附送小技巧：
+  如果你是批量处理文本文件，那甚至可以不管中文文件名问题
+  比如要处理ch_files文件夹下的所有txt文件（包含中文文件名），那么
+  my @files = glob "ch_files/*.txt";
+    # 不过假如你的文件夹是带中文的，那还是得把文件夹参照4转码
+  foreach my $file (@files) { # $file若print出来可能有乱码，但是无妨
+      open my $fh, "<:encoding(gbk)", $file or die;
+      # 假定所有文件都是gbk编码，如果你甲文件是gbk，乙是utf8，
+      # 那就有点麻烦，这里简化下问题
+      while (<$fh>) {
+          print;
+      }
+  }
+
