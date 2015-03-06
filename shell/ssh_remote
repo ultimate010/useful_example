@@ -1,0 +1,3 @@
+远程执行:mkdir .ssh && chmod 700 .ssh 
+本地执行:cat ~/.ssh/id_rsa.pub | ssh root@your_host 'cat -  >> .ssh/authorized_keys' 
+远程执行:restorecon .ssh .ssh/authorized_keys 
