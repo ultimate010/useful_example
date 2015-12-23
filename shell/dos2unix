@@ -1,0 +1,49 @@
+xsh.pipe_dos2unix ()
+{
+    if $(which dos2unix 2>&1> /dev/null); then
+    cat | dos2unix
+    else
+    cat | awk '{sub("\r$", ""); print}'
+    fi
+    return ${PIPESTATUS}
+}
+
+# foo:desc:
+# Run a dos2unix on file $1, and output to stdout
+
+# foo:usage:
+# $foo ./dos.txt
+
+xsh.dos2unix ()
+{
+    cat "$1" | xsh.pipe_dos2unix
+    return ${PIPESTATUS}
+}
+
+# foo:desc
+# Run a unix2dos on stdin, and output to stdout
+
+# foo:usage:
+# cat ./unix.txt | $foo
+
+xsh.pipe_unix2dos ()
+{
+    if $(which unix2dos 2>&1> /dev/null); then
+    cat | unix2dos
+    else
+    cat | awk '{printf $0; if (match($0, "\r$") == 0) print "\r"; else print ""}'
+    fi
+    return ${PIPESTATUS}
+}
+
+# foo:desc:
+# Run a unix2dos on file $1, and output to stdout
+
+# foo:usage:
+# $foo ./unix.txt
+
+xsh.unix2dos ()
+{
+    cat "$1" | xsh.pipe_unix2dos
+    return ${PIPESTATUS}
+}
